@@ -8,6 +8,12 @@
 
 import UIKit
 
+enum screenState: String {
+    case loaded
+    case searching
+    case empty
+}
+
 final class SearchViewController: UIViewController {
 
     //MARK: - IBOutlets
@@ -15,20 +21,27 @@ final class SearchViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    lazy var gameData = [Game]()
+    lazy var defaultGamesData = [Game]()
+    lazy var searchingGamesData = [Game]()
     lazy var networkManager = NetworkManager()
-    lazy var nextPage = 1
+    lazy var nextPage: Int = 1
+    // for default case
+    lazy var queryForPagination = ""
+    // for default case
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         getDelegations()
-        gamesAtMainScreen(page: nextPage)
+        gamesAtMainScreen(page: 1)
     }
     
     func getDelegations() {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
         tableView.delegate = self
         tableView.dataSource = self
+        searchBar.delegate = self
     }
 }
 
@@ -43,7 +56,8 @@ extension SearchViewController {
                 self.activityIndicator.isHidden = false
                 self.activityIndicator.startAnimating()
             } else {
-                self.gameData.append(contentsOf: results)
+                self.defaultGamesData = results
+                self.searchingGamesData = self.defaultGamesData
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                     self.activityIndicator.stopAnimating()
@@ -53,21 +67,48 @@ extension SearchViewController {
         }
     }
     
-    func fetchGames(query: String) {
-        networkManager.fetchGamesWithQuery(query: query) { [weak self] results in
+    func fetchGames(page: Int, query: String) {
+        networkManager.fetchGamesWithQuery(page: page, query: query) { [weak self] results in
             guard let self = self else { return }
             if results.isEmpty {
-                self.tableView.isHidden = true
+               // self.tableView.isHidden = true
                 self.activityIndicator.isHidden = false
                 self.activityIndicator.startAnimating()
             } else {
-                self.activityIndicator.startAnimating()
-                self.gameData = results
+                self.searchingGamesData.append(contentsOf: results)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                     self.tableView.reloadData()
                     self.activityIndicator.stopAnimating()
                     self.activityIndicator.hidesWhenStopped = true
                 })
+            }
+        }
+    }
+}
+
+//MARK: - SearchBar Delegate
+extension SearchViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+         searchBar.endEditing(true)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.searchingGamesData = defaultGamesData
+        searchBar.endEditing(true)
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard let query = searchBar.text else { return }
+        queryForPagination = query
+        if !query.isEmpty && query.count >= 3 {
+            fetchGames(page: nextPage, query: query)
+        } else {
+             self.searchingGamesData = defaultGamesData
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         }
     }
@@ -80,24 +121,24 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return gameData.count
+        return searchingGamesData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "gameCell", for: indexPath) as! GameTableViewCell
-        let selectedGameCell = gameData[indexPath.row]
+        let selectedGameCell = searchingGamesData[indexPath.row]
         cell.configureOutlets(on: selectedGameCell)
         return cell
     }
+    
     //MARK: - pagination
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-        if indexPath.row == gameData.count - 1 {
-            // activityindicator not hidden and starts
+        if indexPath.row == searchingGamesData.count - 1 {
             activityIndicator.isHidden = false
             activityIndicator.startAnimating()
             nextPage += 1
-            gamesAtMainScreen(page: nextPage)
+            fetchGames(page: nextPage, query: queryForPagination)
         }
     }
     
@@ -105,6 +146,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         // TODO Segue or instantiate storyboard
     }
-
 }
+
 

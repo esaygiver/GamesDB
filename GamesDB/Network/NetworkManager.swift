@@ -29,8 +29,8 @@ class NetworkManager: Networkable {
         }
     }
     
-    func fetchGamesWithQuery(query: String, completion: @escaping ([Game]) -> ()) {
-        provider.request(.gameSearch(query: query)) { result in
+    func fetchGamesWithQuery(page: Int, query: String, completion: @escaping ([Game]) -> ()) {
+        provider.request(.gameSearch(page: page, query: query)) { result in
             switch result {
             case let .success(response):
                 do {
