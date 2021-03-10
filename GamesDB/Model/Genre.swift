@@ -1,5 +1,5 @@
 //
-//  GameData.swift
+//  Genre.swift
 //  GamesDB
 //
 //  Created by admin on 10.03.2021.
@@ -8,10 +8,11 @@
 
 import Foundation
 
-struct GameData: Codable {
-    let games: [Game]
+struct Genre: Codable {
+    let id: Int
+    let name: String
 }
 
 private enum CodingKeys: String, CodingKey {
-    case games = "results"
+    case id, name
 }
