@@ -12,7 +12,7 @@ struct Game: Codable {
     let name: String
     let id: Int
     let backgroundImage: String
-    let metacritic: Int
+    let metacritic: Int?
     let genres: [Genre]
     
     private enum CodingKeys: String, CodingKey {

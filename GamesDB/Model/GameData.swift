@@ -10,8 +10,9 @@ import Foundation
 
 struct GameData: Codable {
     let games: [Game]
+    
+    private enum CodingKeys: String, CodingKey {
+        case games = "results"
+    }
 }
 
-private enum CodingKeys: String, CodingKey {
-    case games = "results"
-}

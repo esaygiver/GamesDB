@@ -25,7 +25,7 @@ extension GameAPI: TargetType {
     var path: String {
         switch self {
         case .defaultSearch(_), .gameSearch(_):
-            return "?"
+            return ""
         }
     }
     
