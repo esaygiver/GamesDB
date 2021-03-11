@@ -23,12 +23,12 @@ final class SearchViewController: UIViewController {
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var noGameReturnView: UIView!
     
-    var defaultGamesData = [Game]()
-    var searchingGamesData = [Game]()
-    var networkManager = NetworkManager()
-    var nextPage: Int = 1
+    lazy var defaultGamesData = [Game]()
+    lazy var searchingGamesData = [Game]()
+    lazy var networkManager = NetworkManager()
+    lazy var nextPage: Int = 1
     // for default case
-    var queryForPagination = ""
+    lazy var queryForPagination = ""
     // for default case
     
     var screenState: SearchListState? {
@@ -162,6 +162,15 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        print("hitted me")
+        let selectedGameID = searchingGamesData[indexPath.row].id
+        let detailVC = storyboard?.instantiateViewController(identifier: "DetailViewController") as! DetailViewController
+        detailVC.gameID = selectedGameID
+        self.present(detailVC, animated: true)
+    }
+    
     //MARK: - pagination
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
@@ -171,11 +180,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             nextPage += 1
             fetchGames(page: nextPage, query: queryForPagination)
         }
-    }
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        // TODO Segue or instantiate storyboard
     }
 }
 

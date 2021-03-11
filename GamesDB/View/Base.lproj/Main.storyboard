@@ -223,7 +223,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="OyI-HS-dhm"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Games" id="3Gf-oN-89v"/>
+                    <navigationItem key="navigationItem" title="Games" id="3Gf-oN-89v">
+                        <barButtonItem key="rightBarButtonItem" title="Favorite" id="AyF-dq-Vom"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="2KD-8P-Owv" id="eff-aW-mVZ"/>
                         <outlet property="filterView" destination="M2a-c7-Gl5" id="CI5-s8-FLD"/>
@@ -235,6 +237,133 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nDU-P1-fx0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1515.9420289855075" y="-372.32142857142856"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="Yqm-XR-vRl">
+            <objects>
+                <viewController storyboardIdentifier="DetailViewController" id="ijN-ed-FMl" customClass="DetailViewController" customModule="GamesDB" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Mww-GO-e2a">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="J3Y-Si-o0F">
+                                <rect key="frame" x="0.0" y="44" width="414" height="291"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="291" id="o2a-wg-M8Q"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ti1-sd-V9K">
+                                <rect key="frame" x="0.0" y="44" width="414" height="291"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game Title " textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ae4-fn-IQa">
+                                        <rect key="frame" x="16" y="232" width="382" height="43"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="150" id="vvu-6b-QeS"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Ae4-fn-IQa" secondAttribute="trailing" constant="16" id="CXD-Nh-z2F"/>
+                                    <constraint firstAttribute="height" constant="291" id="QZa-Iv-TgA"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ae4-fn-IQa" secondAttribute="bottom" constant="16" id="j1U-fy-S2Q"/>
+                                    <constraint firstItem="Ae4-fn-IQa" firstAttribute="leading" secondItem="Ti1-sd-V9K" secondAttribute="leading" constant="16" id="jfP-Eq-aAu"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f9W-lN-vPn">
+                                <rect key="frame" x="16" y="351" width="382" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="I2s-tH-v1x"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CjR-iq-zqC">
+                                <rect key="frame" x="16" y="380" width="382" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="150" id="dIy-BZ-cR8"/>
+                                </constraints>
+                                <string key="text">text will be take 4 lines at first but near the label twhere will be a read more button. when you tapped read more, number of lines will be more than 4</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aHb-Tu-Nja">
+                                <rect key="frame" x="318" y="412" width="80" height="25"/>
+                                <color key="backgroundColor" red="0.18825092909999999" green="0.57789415119999998" blue="0.99898904560000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="0Qy-QS-VMj"/>
+                                    <constraint firstAttribute="width" constant="80" id="N4c-p2-FXY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="Read More">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TCk-CM-zyZ">
+                                <rect key="frame" x="132" y="487" width="150" height="30"/>
+                                <color key="backgroundColor" red="0.18825092909999999" green="0.57789415119999998" blue="0.99898904560000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="KiE-wq-W2n"/>
+                                    <constraint firstAttribute="width" constant="150" id="M3K-Lp-HJl"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Visit Reddit">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QT1-ut-52A">
+                                <rect key="frame" x="132" y="533" width="150" height="30"/>
+                                <color key="backgroundColor" red="0.18825092909999999" green="0.57789415119999998" blue="0.99898904560000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="6WS-tX-PWK"/>
+                                    <constraint firstAttribute="height" constant="30" id="od6-b3-m8h"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Visit Website">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="ASi-e5-Za4" firstAttribute="trailing" secondItem="J3Y-Si-o0F" secondAttribute="trailing" id="4p9-7c-gh1"/>
+                            <constraint firstItem="TCk-CM-zyZ" firstAttribute="centerX" secondItem="Mww-GO-e2a" secondAttribute="centerX" id="8ZN-qS-Ryj"/>
+                            <constraint firstItem="ASi-e5-Za4" firstAttribute="trailing" secondItem="Ti1-sd-V9K" secondAttribute="trailing" id="BfT-9n-GML"/>
+                            <constraint firstItem="aHb-Tu-Nja" firstAttribute="top" secondItem="CjR-iq-zqC" secondAttribute="bottom" constant="8" id="BhQ-pK-3Fi"/>
+                            <constraint firstItem="CjR-iq-zqC" firstAttribute="leading" secondItem="ASi-e5-Za4" secondAttribute="leading" constant="16" id="Ezg-oL-xYT"/>
+                            <constraint firstItem="CjR-iq-zqC" firstAttribute="top" secondItem="f9W-lN-vPn" secondAttribute="bottom" constant="8" id="HAr-Ln-vRE"/>
+                            <constraint firstItem="J3Y-Si-o0F" firstAttribute="top" secondItem="ASi-e5-Za4" secondAttribute="top" id="HpC-rE-YnX"/>
+                            <constraint firstItem="Ti1-sd-V9K" firstAttribute="top" secondItem="ASi-e5-Za4" secondAttribute="top" id="Icn-To-fR5"/>
+                            <constraint firstItem="J3Y-Si-o0F" firstAttribute="leading" secondItem="ASi-e5-Za4" secondAttribute="leading" id="Nrd-C6-XKC"/>
+                            <constraint firstItem="ASi-e5-Za4" firstAttribute="trailing" secondItem="aHb-Tu-Nja" secondAttribute="trailing" constant="16" id="Oih-PX-xkZ"/>
+                            <constraint firstItem="f9W-lN-vPn" firstAttribute="top" secondItem="J3Y-Si-o0F" secondAttribute="bottom" constant="16" id="TUI-af-Wci"/>
+                            <constraint firstItem="ASi-e5-Za4" firstAttribute="trailing" secondItem="CjR-iq-zqC" secondAttribute="trailing" constant="16" id="UBv-eS-oVH"/>
+                            <constraint firstItem="f9W-lN-vPn" firstAttribute="leading" secondItem="ASi-e5-Za4" secondAttribute="leading" constant="16" id="XUb-6w-v2x"/>
+                            <constraint firstItem="Ti1-sd-V9K" firstAttribute="leading" secondItem="ASi-e5-Za4" secondAttribute="leading" id="Zzp-NZ-IBL"/>
+                            <constraint firstItem="TCk-CM-zyZ" firstAttribute="top" secondItem="aHb-Tu-Nja" secondAttribute="bottom" constant="50" id="b6x-o7-XZt"/>
+                            <constraint firstItem="QT1-ut-52A" firstAttribute="centerX" secondItem="Mww-GO-e2a" secondAttribute="centerX" id="fIo-Xe-sO2"/>
+                            <constraint firstItem="QT1-ut-52A" firstAttribute="top" secondItem="TCk-CM-zyZ" secondAttribute="bottom" constant="16" id="lAx-EV-nOU"/>
+                            <constraint firstItem="ASi-e5-Za4" firstAttribute="trailing" secondItem="f9W-lN-vPn" secondAttribute="trailing" constant="16" id="yGe-69-oNp"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ASi-e5-Za4"/>
+                    </view>
+                    <connections>
+                        <outlet property="gameDescrition" destination="CjR-iq-zqC" id="ACE-hm-xRK"/>
+                        <outlet property="gameImageView" destination="J3Y-Si-o0F" id="avN-H9-Zzd"/>
+                        <outlet property="gameTitle" destination="Ae4-fn-IQa" id="Nr0-VI-B8M"/>
+                        <outlet property="readMoreButton" destination="aHb-Tu-Nja" id="fkD-3n-aQw"/>
+                        <outlet property="visitRedditButton" destination="TCk-CM-zyZ" id="4au-v3-1Cg"/>
+                        <outlet property="visitWebsiteButton" destination="QT1-ut-52A" id="4zU-zS-PdN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IrQ-rg-LkC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2373" y="-374"/>
         </scene>
         <!--Games-->
         <scene sceneID="wSc-1j-PZ2">

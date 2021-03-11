@@ -9,7 +9,7 @@
 import Foundation
 import Moya
 
-class NetworkManager: Networkable {
+final class NetworkManager: Networkable {
     
     var provider = MoyaProvider<GameAPI>(plugins: [NetworkLoggerPlugin()])
     
@@ -36,6 +36,22 @@ class NetworkManager: Networkable {
                 do {
                     let results = try JSONDecoder().decode(GameData.self, from: response.data)
                     completion(results.games)
+                } catch let error {
+                    dump(error)
+                }
+            case let .failure(error):
+                dump(error)
+            }
+        }
+    }
+    
+    func fetchGamesDetails(gameID: Int, completion: @escaping (GameDetail) -> ()) {
+        provider.request(.gameDetail(gameID: gameID)) { result in
+            switch result {
+            case let .success(response):
+                do {
+                    let results = try JSONDecoder().decode(GameDetail.self, from: response.data)
+                    completion(results)
                 } catch let error {
                     dump(error)
                 }

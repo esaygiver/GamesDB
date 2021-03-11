@@ -12,6 +12,7 @@ import Moya
 enum GameAPI {
     case defaultSearch(page: Int)
     case gameSearch(page: Int, query: String)
+    case gameDetail(gameID: Int)
 }
 
 private let APIKey = getURL(on: Keys.APIKey)
@@ -26,12 +27,14 @@ extension GameAPI: TargetType {
         switch self {
         case .defaultSearch(_), .gameSearch(_,_):
             return ""
+        case .gameDetail(gameID: let gameID):
+            return "/\(gameID)"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .defaultSearch(_), .gameSearch(_,_):
+        case .defaultSearch(_), .gameSearch(_,_), .gameDetail(_):
             return .get
         }
     }
@@ -49,6 +52,8 @@ extension GameAPI: TargetType {
             return .requestParameters(parameters: ["api_key" : APIKey,
                                                    "page" : page,
                                                    "search" : query], encoding: URLEncoding.queryString)
+        case .gameDetail(_):
+            return .requestPlain
         }
     }
     

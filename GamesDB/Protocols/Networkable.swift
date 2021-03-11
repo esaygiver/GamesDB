@@ -13,5 +13,6 @@ protocol Networkable {
     
     var provider: MoyaProvider<GameAPI> { get }
     func fetchDefaultGames(page: Int, completion: @escaping ([Game]) -> ())
-    func fetchGamesWithQuery(page: Int, query: String, completion: @escaping ([Game]) -> () )
+    func fetchGamesWithQuery(page: Int, query: String, completion: @escaping ([Game]) -> ())
+    func fetchGamesDetails(gameID: Int, completion: @escaping (GameDetail) -> ())
 }
