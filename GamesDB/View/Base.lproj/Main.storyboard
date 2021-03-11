@@ -49,8 +49,64 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="136" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mwL-K8-qOQ">
-                                <rect key="frame" x="0.0" y="136" width="414" height="657"/>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bgT-0p-P9b">
+                                <rect key="frame" x="0.0" y="188" width="414" height="625"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ORK-v8-WqY">
+                                        <rect key="frame" x="22.5" y="269.5" width="369" height="86.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="😢" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eKc-Fi-xhb">
+                                                <rect key="frame" x="158.5" y="0.0" width="52" height="57.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Could not find game you searched" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6wS-Pa-qzR" userLabel="No data return ">
+                                                <rect key="frame" x="8" y="57.5" width="353" height="29"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="6wS-Pa-qzR" secondAttribute="trailing" constant="8" id="8F0-TP-FMh"/>
+                                            <constraint firstItem="6wS-Pa-qzR" firstAttribute="leading" secondItem="ORK-v8-WqY" secondAttribute="leading" constant="8" id="DJf-gc-b8Z"/>
+                                            <constraint firstItem="eKc-Fi-xhb" firstAttribute="centerX" secondItem="ORK-v8-WqY" secondAttribute="centerX" id="F6a-2S-jez"/>
+                                            <constraint firstAttribute="bottom" secondItem="6wS-Pa-qzR" secondAttribute="bottom" id="M3r-fB-98v"/>
+                                            <constraint firstItem="6wS-Pa-qzR" firstAttribute="top" secondItem="eKc-Fi-xhb" secondAttribute="bottom" id="cBu-zm-rq4"/>
+                                            <constraint firstItem="eKc-Fi-xhb" firstAttribute="top" secondItem="ORK-v8-WqY" secondAttribute="top" id="scJ-nR-H58"/>
+                                            <constraint firstItem="6wS-Pa-qzR" firstAttribute="top" secondItem="eKc-Fi-xhb" secondAttribute="bottom" id="tAx-kJ-Tgg"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="ORK-v8-WqY" firstAttribute="centerY" secondItem="bgT-0p-P9b" secondAttribute="centerY" id="6h2-mb-tHJ"/>
+                                    <constraint firstItem="ORK-v8-WqY" firstAttribute="centerX" secondItem="bgT-0p-P9b" secondAttribute="centerX" id="Qe4-c4-eaK"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M2a-c7-Gl5">
+                                <rect key="frame" x="0.0" y="188" width="414" height="625"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No game has been searched." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zlh-mc-58C">
+                                        <rect key="frame" x="89" y="42" width="236" height="41"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="41" id="ian-vJ-ZeC"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.95236712690000003" green="0.95247751469999997" blue="0.95231753590000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="zlh-mc-58C" firstAttribute="centerY" secondItem="M2a-c7-Gl5" secondAttribute="centerY" constant="-250" id="mlx-2Z-8Ag"/>
+                                    <constraint firstItem="zlh-mc-58C" firstAttribute="centerX" secondItem="M2a-c7-Gl5" secondAttribute="centerX" id="oAm-tD-rje"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="136" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mwL-K8-qOQ" userLabel="Search Table View">
+                                <rect key="frame" x="0.0" y="188" width="414" height="605"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="gameCell" rowHeight="136" id="Crn-Z7-B9n" customClass="GameTableViewCell" customModule="GamesDB" customModuleProvider="target">
@@ -62,6 +118,9 @@
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RhX-nG-jDQ">
                                                     <rect key="frame" x="16" y="16" width="120" height="104"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="120" id="Pgt-hz-Toj"/>
+                                                    </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LYJ-YG-ywd">
                                                     <rect key="frame" x="152" y="16" width="246" height="24"/>
@@ -103,18 +162,16 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="AZV-0B-27g" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lr2-7P-bQ9" secondAttribute="trailing" constant="4" id="2v9-Nd-n3o"/>
+                                                <constraint firstItem="AZV-0B-27g" firstAttribute="leading" secondItem="lr2-7P-bQ9" secondAttribute="trailing" constant="4" id="2v9-Nd-n3o"/>
                                                 <constraint firstItem="lr2-7P-bQ9" firstAttribute="leading" secondItem="kuP-uJ-tS3" secondAttribute="leading" constant="152" id="BPP-uN-8Eu"/>
                                                 <constraint firstAttribute="trailing" secondItem="cQ3-hY-B4j" secondAttribute="trailing" constant="16" id="Cao-xA-vcl"/>
                                                 <constraint firstAttribute="bottom" secondItem="AZV-0B-27g" secondAttribute="bottom" constant="36" id="DNs-Hy-fdW"/>
                                                 <constraint firstAttribute="trailing" secondItem="LYJ-YG-ywd" secondAttribute="trailing" constant="16" id="Doi-Ux-TdB"/>
                                                 <constraint firstItem="RhX-nG-jDQ" firstAttribute="leading" secondItem="kuP-uJ-tS3" secondAttribute="leading" constant="16" id="FFp-Sy-TU1"/>
-                                                <constraint firstAttribute="trailing" secondItem="RhX-nG-jDQ" secondAttribute="trailing" constant="278" id="G9n-pa-AMp"/>
                                                 <constraint firstAttribute="bottom" secondItem="cQ3-hY-B4j" secondAttribute="bottom" constant="12" id="Gvf-Jt-nNL"/>
                                                 <constraint firstAttribute="bottom" secondItem="RhX-nG-jDQ" secondAttribute="bottom" constant="16" id="IUh-sf-Fr3"/>
                                                 <constraint firstAttribute="bottom" secondItem="lr2-7P-bQ9" secondAttribute="bottom" constant="36" id="LWv-cE-Bce"/>
                                                 <constraint firstItem="RhX-nG-jDQ" firstAttribute="top" secondItem="kuP-uJ-tS3" secondAttribute="top" constant="16" id="NPY-55-ly6"/>
-                                                <constraint firstAttribute="trailing" secondItem="AZV-0B-27g" secondAttribute="trailing" constant="159" id="Ssl-n4-HJC"/>
                                                 <constraint firstItem="LYJ-YG-ywd" firstAttribute="top" secondItem="kuP-uJ-tS3" secondAttribute="top" constant="16" id="YNQ-Qn-e7T"/>
                                                 <constraint firstItem="LYJ-YG-ywd" firstAttribute="leading" secondItem="kuP-uJ-tS3" secondAttribute="leading" constant="152" id="yOw-U4-UN3"/>
                                                 <constraint firstItem="cQ3-hY-B4j" firstAttribute="leading" secondItem="RhX-nG-jDQ" secondAttribute="trailing" constant="16" id="yqe-4q-02l"/>
@@ -130,7 +187,7 @@
                                 </prototypes>
                             </tableView>
                             <searchBar contentMode="redraw" placeholder="Search for the games" translatesAutoresizingMaskIntoConstraints="NO" id="pwL-VR-snR">
-                                <rect key="frame" x="8" y="88" width="398" height="48"/>
+                                <rect key="frame" x="8" y="140" width="398" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="p8J-NX-AIc"/>
                                 </constraints>
@@ -146,12 +203,20 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="OyI-HS-dhm" firstAttribute="bottom" secondItem="bgT-0p-P9b" secondAttribute="bottom" id="APx-Yf-gIP"/>
+                            <constraint firstItem="OyI-HS-dhm" firstAttribute="trailing" secondItem="bgT-0p-P9b" secondAttribute="trailing" id="DYy-gd-q6i"/>
                             <constraint firstItem="OyI-HS-dhm" firstAttribute="trailing" secondItem="mwL-K8-qOQ" secondAttribute="trailing" id="EeA-x4-Fi0"/>
+                            <constraint firstItem="bgT-0p-P9b" firstAttribute="top" secondItem="pwL-VR-snR" secondAttribute="bottom" id="M0J-Vc-S3Q"/>
                             <constraint firstItem="mwL-K8-qOQ" firstAttribute="top" secondItem="pwL-VR-snR" secondAttribute="bottom" id="Nlo-qP-RPc"/>
+                            <constraint firstItem="M2a-c7-Gl5" firstAttribute="leading" secondItem="OyI-HS-dhm" secondAttribute="leading" id="PrK-YU-Hpf"/>
                             <constraint firstItem="pwL-VR-snR" firstAttribute="leading" secondItem="OyI-HS-dhm" secondAttribute="leading" constant="8" id="SSl-1r-B6H"/>
                             <constraint firstItem="2KD-8P-Owv" firstAttribute="centerX" secondItem="vBJ-Xy-wY6" secondAttribute="centerX" id="San-m1-com"/>
                             <constraint firstItem="mwL-K8-qOQ" firstAttribute="leading" secondItem="OyI-HS-dhm" secondAttribute="leading" id="VXe-P0-vfn"/>
+                            <constraint firstItem="OyI-HS-dhm" firstAttribute="bottom" secondItem="M2a-c7-Gl5" secondAttribute="bottom" id="W9u-Uv-umt"/>
+                            <constraint firstItem="bgT-0p-P9b" firstAttribute="leading" secondItem="OyI-HS-dhm" secondAttribute="leading" id="YtZ-Qi-n6t"/>
                             <constraint firstItem="pwL-VR-snR" firstAttribute="trailing" secondItem="OyI-HS-dhm" secondAttribute="trailing" constant="-8" id="ads-MF-M1J"/>
+                            <constraint firstItem="OyI-HS-dhm" firstAttribute="trailing" secondItem="M2a-c7-Gl5" secondAttribute="trailing" id="fgx-he-AWV"/>
+                            <constraint firstItem="M2a-c7-Gl5" firstAttribute="top" secondItem="pwL-VR-snR" secondAttribute="bottom" id="jtq-6n-ckG"/>
                             <constraint firstItem="2KD-8P-Owv" firstAttribute="top" secondItem="mwL-K8-qOQ" secondAttribute="bottom" id="lxD-BL-bQA"/>
                             <constraint firstItem="pwL-VR-snR" firstAttribute="top" secondItem="OyI-HS-dhm" secondAttribute="top" id="qp4-hT-vS9"/>
                             <constraint firstItem="OyI-HS-dhm" firstAttribute="bottom" secondItem="mwL-K8-qOQ" secondAttribute="bottom" constant="20" id="smN-rl-AbW"/>
@@ -159,9 +224,10 @@
                         <viewLayoutGuide key="safeArea" id="OyI-HS-dhm"/>
                     </view>
                     <navigationItem key="navigationItem" title="Games" id="3Gf-oN-89v"/>
-                    <size key="freeformSize" width="414" height="896"/>
                     <connections>
                         <outlet property="activityIndicator" destination="2KD-8P-Owv" id="eff-aW-mVZ"/>
+                        <outlet property="filterView" destination="M2a-c7-Gl5" id="CI5-s8-FLD"/>
+                        <outlet property="noGameReturnView" destination="bgT-0p-P9b" id="Zwr-Oj-hBx"/>
                         <outlet property="searchBar" destination="pwL-VR-snR" id="Hli-aD-Zyq"/>
                         <outlet property="tableView" destination="mwL-K8-qOQ" id="dwL-fW-YMV"/>
                     </connections>

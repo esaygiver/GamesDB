@@ -8,26 +8,46 @@
 
 import UIKit
 
-enum screenState: String {
+enum SearchListState: String {
     case loaded
     case searching
     case empty
 }
 
 final class SearchViewController: UIViewController {
-
+    
     //MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var filterView: UIView!
+    @IBOutlet weak var noGameReturnView: UIView!
     
-    lazy var defaultGamesData = [Game]()
-    lazy var searchingGamesData = [Game]()
-    lazy var networkManager = NetworkManager()
-    lazy var nextPage: Int = 1
+    var defaultGamesData = [Game]()
+    var searchingGamesData = [Game]()
+    var networkManager = NetworkManager()
+    var nextPage: Int = 1
     // for default case
-    lazy var queryForPagination = ""
+    var queryForPagination = ""
     // for default case
+    
+    var screenState: SearchListState? {
+        didSet {
+            if screenState == .searching {
+                filterView.isHidden = false
+                tableView.isHidden = true
+                noGameReturnView.isHidden = true
+            } else if screenState == .loaded {
+                filterView.isHidden = true
+                tableView.isHidden = false
+                noGameReturnView.isHidden = true
+            } else {
+                filterView.isHidden = true
+                tableView.isHidden = true
+                noGameReturnView.isHidden = false
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +62,7 @@ final class SearchViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         searchBar.delegate = self
+        searchBar.enablesReturnKeyAutomatically = false
     }
 }
 
@@ -52,12 +73,11 @@ extension SearchViewController {
         networkManager.fetchDefaultGames(page: page) { [weak self] results in
             guard let self = self else { return }
             if results.isEmpty {
-                self.tableView.isHidden = true
-                self.activityIndicator.isHidden = false
-                self.activityIndicator.startAnimating()
+                self.screenState = .empty
             } else {
                 self.defaultGamesData.append(contentsOf: results)
                 self.searchingGamesData.append(contentsOf: results)
+                self.screenState = .loaded
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                     self.activityIndicator.stopAnimating()
@@ -71,16 +91,17 @@ extension SearchViewController {
         networkManager.fetchGamesWithQuery(page: page, query: query) { [weak self] results in
             guard let self = self else { return }
             if results.isEmpty {
-               // self.tableView.isHidden = true
-                self.activityIndicator.isHidden = false
-                self.activityIndicator.startAnimating()
+                self.screenState = .empty
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.hidesWhenStopped = true
             } else {
                 self.searchingGamesData.append(contentsOf: results)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                self.screenState = .loaded
+                DispatchQueue.main.async {
                     self.tableView.reloadData()
                     self.activityIndicator.stopAnimating()
                     self.activityIndicator.hidesWhenStopped = true
-                })
+                }
             }
         }
     }
@@ -89,40 +110,45 @@ extension SearchViewController {
 //MARK: - SearchBar Delegate
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-         searchBar.endEditing(true)
+        nextPage = 1
+        searchBar.endEditing(true)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.searchingGamesData = defaultGamesData
         nextPage = 1
+//        searchingGamesData = []
+//        gamesAtMainScreen(page: nextPage)
         searchBar.endEditing(true)
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+//        DispatchQueue.main.async {
+//            self.tableView.reloadData()
+//        }
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let query = searchBar.text else { return }
         queryForPagination = query
-        if !query.isEmpty && query.count >= 3 {
+        nextPage = 1
+        // nextpage reset because it might be changed at main screen, we want to add 1 when you pagination at search screen
+        if query.isEmpty {
+            // tableview shows the default games
+            searchingGamesData = []
+            gamesAtMainScreen(page: nextPage)
+        } else if query != "" && query.count < 3 {
             searchingGamesData = []
             // searchingGamesData reset as there were games comin from default request
-            nextPage = 1
-            // nextpage reset because it might be changed at main screen, we want to add 1 when you pagination at search screen
+            screenState = .searching
+            // filterview shows
+        } else if query.count >= 3 {
             fetchGames(page: nextPage, query: queryForPagination)
-        } else {
-             self.searchingGamesData = defaultGamesData
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
         }
     }
 }
 
+
 //MARK: - TableView Delegate & Datasource
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-            return 1
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
