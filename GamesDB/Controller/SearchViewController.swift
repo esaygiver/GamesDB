@@ -33,7 +33,7 @@ final class SearchViewController: UIViewController {
         super.viewDidLoad()
         
         getDelegations()
-        gamesAtMainScreen(page: 1)
+        gamesAtMainScreen(page: nextPage)
     }
     
     func getDelegations() {
@@ -56,8 +56,8 @@ extension SearchViewController {
                 self.activityIndicator.isHidden = false
                 self.activityIndicator.startAnimating()
             } else {
-                self.defaultGamesData = results
-                self.searchingGamesData = self.defaultGamesData
+                self.defaultGamesData.append(contentsOf: results)
+                self.searchingGamesData.append(contentsOf: results)
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                     self.activityIndicator.stopAnimating()
@@ -94,6 +94,7 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.searchingGamesData = defaultGamesData
+        nextPage = 1
         searchBar.endEditing(true)
         DispatchQueue.main.async {
             self.tableView.reloadData()
@@ -104,7 +105,11 @@ extension SearchViewController: UISearchBarDelegate {
         guard let query = searchBar.text else { return }
         queryForPagination = query
         if !query.isEmpty && query.count >= 3 {
-            fetchGames(page: nextPage, query: query)
+            searchingGamesData = []
+            // searchingGamesData reset as there were games comin from default request
+            nextPage = 1
+            // nextpage reset because it might be changed at main screen, we want to add 1 when you pagination at search screen
+            fetchGames(page: nextPage, query: queryForPagination)
         } else {
              self.searchingGamesData = defaultGamesData
             DispatchQueue.main.async {
