@@ -223,15 +223,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="OyI-HS-dhm"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Games" id="3Gf-oN-89v">
-                        <barButtonItem key="rightBarButtonItem" title="Favorite" id="AyF-dq-Vom"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Games" id="3Gf-oN-89v"/>
                     <connections>
                         <outlet property="activityIndicator" destination="2KD-8P-Owv" id="eff-aW-mVZ"/>
                         <outlet property="filterView" destination="M2a-c7-Gl5" id="CI5-s8-FLD"/>
                         <outlet property="noGameReturnView" destination="bgT-0p-P9b" id="Zwr-Oj-hBx"/>
                         <outlet property="searchBar" destination="pwL-VR-snR" id="Hli-aD-Zyq"/>
                         <outlet property="tableView" destination="mwL-K8-qOQ" id="dwL-fW-YMV"/>
+                        <segue destination="ijN-ed-FMl" kind="show" id="xZH-ej-wvY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nDU-P1-fx0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -247,13 +246,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="J3Y-Si-o0F">
-                                <rect key="frame" x="0.0" y="44" width="414" height="291"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="291"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="291" id="o2a-wg-M8Q"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ti1-sd-V9K">
-                                <rect key="frame" x="0.0" y="44" width="414" height="291"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="291"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game Title " textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ae4-fn-IQa">
                                         <rect key="frame" x="16" y="232" width="382" height="43"/>
@@ -274,7 +273,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f9W-lN-vPn">
-                                <rect key="frame" x="16" y="351" width="382" height="21"/>
+                                <rect key="frame" x="16" y="395" width="382" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="I2s-tH-v1x"/>
                                 </constraints>
@@ -282,18 +281,17 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CjR-iq-zqC">
-                                <rect key="frame" x="16" y="380" width="382" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CjR-iq-zqC">
+                                <rect key="frame" x="16" y="424" width="382" height="12"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="150" id="dIy-BZ-cR8"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="350" id="dIy-BZ-cR8"/>
                                 </constraints>
-                                <string key="text">text will be take 4 lines at first but near the label twhere will be a read more button. when you tapped read more, number of lines will be more than 4</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aHb-Tu-Nja">
-                                <rect key="frame" x="318" y="412" width="80" height="25"/>
+                                <rect key="frame" x="318" y="444" width="80" height="25"/>
                                 <color key="backgroundColor" red="0.18825092909999999" green="0.57789415119999998" blue="0.99898904560000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="0Qy-QS-VMj"/>
@@ -303,9 +301,12 @@
                                 <state key="normal" title="Read More">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="readMeButtonTapped:" destination="ijN-ed-FMl" eventType="touchUpInside" id="70H-nv-kSS"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TCk-CM-zyZ">
-                                <rect key="frame" x="132" y="487" width="150" height="30"/>
+                                <rect key="frame" x="132" y="499" width="150" height="30"/>
                                 <color key="backgroundColor" red="0.18825092909999999" green="0.57789415119999998" blue="0.99898904560000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="KiE-wq-W2n"/>
@@ -315,9 +316,12 @@
                                 <state key="normal" title="Visit Reddit">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="visitRedditButtonTapped:" destination="ijN-ed-FMl" eventType="touchUpInside" id="b1i-tG-vF7"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QT1-ut-52A">
-                                <rect key="frame" x="132" y="533" width="150" height="30"/>
+                                <rect key="frame" x="132" y="545" width="150" height="30"/>
                                 <color key="backgroundColor" red="0.18825092909999999" green="0.57789415119999998" blue="0.99898904560000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="6WS-tX-PWK"/>
@@ -327,6 +331,9 @@
                                 <state key="normal" title="Visit Website">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="visitWebbsiteButtonTapped:" destination="ijN-ed-FMl" eventType="touchUpInside" id="DUm-97-1wL"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -345,14 +352,22 @@
                             <constraint firstItem="ASi-e5-Za4" firstAttribute="trailing" secondItem="CjR-iq-zqC" secondAttribute="trailing" constant="16" id="UBv-eS-oVH"/>
                             <constraint firstItem="f9W-lN-vPn" firstAttribute="leading" secondItem="ASi-e5-Za4" secondAttribute="leading" constant="16" id="XUb-6w-v2x"/>
                             <constraint firstItem="Ti1-sd-V9K" firstAttribute="leading" secondItem="ASi-e5-Za4" secondAttribute="leading" id="Zzp-NZ-IBL"/>
-                            <constraint firstItem="TCk-CM-zyZ" firstAttribute="top" secondItem="aHb-Tu-Nja" secondAttribute="bottom" constant="50" id="b6x-o7-XZt"/>
+                            <constraint firstItem="TCk-CM-zyZ" firstAttribute="top" secondItem="aHb-Tu-Nja" secondAttribute="bottom" constant="30" id="b6x-o7-XZt"/>
                             <constraint firstItem="QT1-ut-52A" firstAttribute="centerX" secondItem="Mww-GO-e2a" secondAttribute="centerX" id="fIo-Xe-sO2"/>
                             <constraint firstItem="QT1-ut-52A" firstAttribute="top" secondItem="TCk-CM-zyZ" secondAttribute="bottom" constant="16" id="lAx-EV-nOU"/>
                             <constraint firstItem="ASi-e5-Za4" firstAttribute="trailing" secondItem="f9W-lN-vPn" secondAttribute="trailing" constant="16" id="yGe-69-oNp"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ASi-e5-Za4"/>
                     </view>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="m04-gZ-bre">
+                        <barButtonItem key="rightBarButtonItem" title="Favorite" id="4gH-EZ-uwZ">
+                            <connections>
+                                <action selector="favoriteButtonTapped:" destination="ijN-ed-FMl" id="uzE-Vj-VLh"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="favoriteButton" destination="4gH-EZ-uwZ" id="smf-f3-88U"/>
                         <outlet property="gameDescrition" destination="CjR-iq-zqC" id="ACE-hm-xRK"/>
                         <outlet property="gameImageView" destination="J3Y-Si-o0F" id="avN-H9-Zzd"/>
                         <outlet property="gameTitle" destination="Ae4-fn-IQa" id="Nr0-VI-B8M"/>
@@ -363,7 +378,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IrQ-rg-LkC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2373" y="-374"/>
+            <point key="canvasLocation" x="2355" y="-372"/>
         </scene>
         <!--Games-->
         <scene sceneID="wSc-1j-PZ2">

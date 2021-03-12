@@ -8,6 +8,7 @@
 
 import UIKit
 import Moya
+import SafariServices
 
 final class DetailViewController: UIViewController {
     
@@ -17,6 +18,7 @@ final class DetailViewController: UIViewController {
     @IBOutlet weak var readMoreButton: UIButton!
     @IBOutlet weak var visitRedditButton: UIButton!
     @IBOutlet weak var visitWebsiteButton: UIButton!
+    @IBOutlet weak var favoriteButton: UIBarButtonItem!
     @IBOutlet weak var gameDescrition: UILabel! {
         didSet {
             gameDescrition.numberOfLines = 4
@@ -45,6 +47,38 @@ final class DetailViewController: UIViewController {
         readMoreButton.getCurvyButton(readMoreButton)
         visitRedditButton.getCurvyButton(visitRedditButton)
         visitWebsiteButton.getCurvyButton(visitWebsiteButton)
+    }
+    
+    @IBAction func readMeButtonTapped(_ sender: UIButton) {
+
+        if gameDescrition.numberOfLines == 4 {
+            gameDescrition.numberOfLines = 18
+        } else {
+            gameDescrition.numberOfLines = 4
+        }
+    }
+    
+    @IBAction func favoriteButtonTapped(_ ssender: UIButton) {
+        if favoriteButton.title == "Favorite" {
+            favoriteButton.title = "Favorited"
+        } else {
+            favoriteButton.title = "Favorite"
+        }
+    }
+    
+    @IBAction func visitRedditButtonTapped(_ sender: UIButton) {
+            let url = gameDetail.redditURL
+            let vc = SFSafariViewController(url: (URL(string: url) ?? URL(string: "https://www.reddit.com/search/)"))!)
+            vc.modalTransitionStyle = .crossDissolve
+            self.present(vc, animated: true)
+    }
+    
+    @IBAction func visitWebbsiteButtonTapped(_ sender: UIButton) {
+        let url = gameDetail.websiteURL
+        let vc = SFSafariViewController(url: (URL(string: url) ?? URL(string: "https://www.google.com"))!)
+        // TODO - Change google
+        vc.modalTransitionStyle = .crossDissolve
+        self.present(vc, animated: true)
     }
 }
 
