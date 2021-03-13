@@ -9,5 +9,6 @@ target 'GamesDB' do
 
 pod 'Moya', '~> 14.0'
 pod 'Kingfisher', '~> 6.0'
+pod 'RealmSwift'
 
 end

@@ -9,6 +9,7 @@
 import UIKit
 import Moya
 import SafariServices
+import RealmSwift
 
 final class DetailViewController: UIViewController {
     
@@ -26,18 +27,20 @@ final class DetailViewController: UIViewController {
         }
     }
     
+    private let realm = try! Realm()
     lazy var networkManager = NetworkManager()
     var gameDetail: GameDetail!
+    var GameDataFromSearchVC: Game!
     lazy var gameID: Int = 1
-    // for default game selection, it will change by indexPath.row
+    // for default game selection, it will be changed by indexPath.row
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupButtons()
         fetchGameDetails(gameID: gameID)
-        
     }
+    
     func updateOutlets() {
         self.gameImageView.fetchImage(from: gameDetail.backgroundImage)
         self.gameTitle.text = gameDetail.name
@@ -59,11 +62,29 @@ final class DetailViewController: UIViewController {
         }
     }
     
-    @IBAction func favoriteButtonTapped(_ ssender: UIButton) {
-        if favoriteButton.title == "Favourite" {
-            favoriteButton.title = "Favourited"
+    @IBAction func favoriteButtonTapped(_ sender: UIButton) {
+        
+        if favoriteButton.title == "Favorite" {
+            favoriteButton.title = "Favorited"
+            // when we tapped fav button realm begins write game data
+            realm.beginWrite()
+            let favoriteGame = FavoriteGames()
+            favoriteGame.gameID = GameDataFromSearchVC.id
+            favoriteGame.gameTitle = GameDataFromSearchVC.name!
+            favoriteGame.gameBackdrop = GameDataFromSearchVC.backgroundImage!
+         //   selectedFavoriteGame.gameGender = GameDataFromSearchVC.genres
+         //   selectedFavoriteGame.gameMetacritic = GameDataFromSearchVC.metacritic!
+            realm.add(favoriteGame)
+            realm.refresh()
+            try! realm.commitWrite()
+        print(FavoriteGames().gameID)
+        print(GameDataFromSearchVC.name)
         } else {
-            favoriteButton.title = "Favourite"
+            favoriteButton.title = "Favorite"
+//            realm.beginWrite()
+//            realm.delete(selectedFavoriteGame)
+//            realm.refresh()
+//            try! realm.commitWrite()
         }
     }
     

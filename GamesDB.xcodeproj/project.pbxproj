@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		840D8C4925FCE9AE0001C52D /* FavoriteGames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D8C4825FCE9AE0001C52D /* FavoriteGames.swift */; };
+		840D8C4B25FCEECC0001C52D /* FavoriteGameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D8C4A25FCEECC0001C52D /* FavoriteGameTableViewCell.swift */; };
 		8447F9C025F8C1B900AF1731 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8447F9BF25F8C1B900AF1731 /* AppDelegate.swift */; };
 		8447F9C225F8C1B900AF1731 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8447F9C125F8C1B900AF1731 /* SceneDelegate.swift */; };
 		8447F9C425F8C1B900AF1731 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8447F9C325F8C1B900AF1731 /* SearchViewController.swift */; };
@@ -31,6 +33,8 @@
 
 /* Begin PBXFileReference section */
 		4FA38B81F1B5B37151EBE0FD /* Pods-GamesDB.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GamesDB.release.xcconfig"; path = "Target Support Files/Pods-GamesDB/Pods-GamesDB.release.xcconfig"; sourceTree = "<group>"; };
+		840D8C4825FCE9AE0001C52D /* FavoriteGames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGames.swift; sourceTree = "<group>"; };
+		840D8C4A25FCEECC0001C52D /* FavoriteGameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGameTableViewCell.swift; sourceTree = "<group>"; };
 		8447F9BC25F8C1B900AF1731 /* GamesDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GamesDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8447F9BF25F8C1B900AF1731 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8447F9C125F8C1B900AF1731 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -116,8 +120,9 @@
 			children = (
 				8447F9C325F8C1B900AF1731 /* SearchViewController.swift */,
 				84F3713425FA9D700061C05C /* DetailViewController.swift */,
-				84F3712F25F960500061C05C /* GameTableViewCell.swift */,
 				84F3711C25F8CD920061C05C /* FavoriteViewController.swift */,
+				84F3712F25F960500061C05C /* GameTableViewCell.swift */,
+				840D8C4A25FCEECC0001C52D /* FavoriteGameTableViewCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -155,6 +160,7 @@
 				84F3713825FAA1270061C05C /* GameDetail.swift */,
 				84F3712125F8D21A0061C05C /* GameData.swift */,
 				84F3712625F958EC0061C05C /* Genre.swift */,
+				840D8C4825FCE9AE0001C52D /* FavoriteGames.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -322,7 +328,9 @@
 				8447F9C225F8C1B900AF1731 /* SceneDelegate.swift in Sources */,
 				84F3712525F954BA0061C05C /* API.swift in Sources */,
 				84F3712C25F95B5F0061C05C /* Networkable.swift in Sources */,
+				840D8C4925FCE9AE0001C52D /* FavoriteGames.swift in Sources */,
 				84F3712725F958EC0061C05C /* Genre.swift in Sources */,
+				840D8C4B25FCEECC0001C52D /* FavoriteGameTableViewCell.swift in Sources */,
 				84F3713025F960500061C05C /* GameTableViewCell.swift in Sources */,
 				84F3713525FA9D700061C05C /* DetailViewController.swift in Sources */,
 			);
