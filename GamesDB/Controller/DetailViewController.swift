@@ -15,6 +15,7 @@ final class DetailViewController: UIViewController {
     //MARK: - IBOutlets
     @IBOutlet weak var gameImageView: UIImageView!
     @IBOutlet weak var gameTitle: UILabel!
+    @IBOutlet weak var sorryMessage: UILabel!
     @IBOutlet weak var readMoreButton: UIButton!
     @IBOutlet weak var visitRedditButton: UIButton!
     @IBOutlet weak var visitWebsiteButton: UIButton!
@@ -24,7 +25,7 @@ final class DetailViewController: UIViewController {
             gameDescrition.numberOfLines = 4
         }
     }
-
+    
     lazy var networkManager = NetworkManager()
     var gameDetail: GameDetail!
     lazy var gameID: Int = 1
@@ -32,7 +33,7 @@ final class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupButtons()
         fetchGameDetails(gameID: gameID)
         
@@ -50,7 +51,7 @@ final class DetailViewController: UIViewController {
     }
     
     @IBAction func readMeButtonTapped(_ sender: UIButton) {
-
+        
         if gameDescrition.numberOfLines == 4 {
             gameDescrition.numberOfLines = 18
         } else {
@@ -59,27 +60,48 @@ final class DetailViewController: UIViewController {
     }
     
     @IBAction func favoriteButtonTapped(_ ssender: UIButton) {
-        if favoriteButton.title == "Favorite" {
-            favoriteButton.title = "Favorited"
+        if favoriteButton.title == "Favourite" {
+            favoriteButton.title = "Favourited"
         } else {
-            favoriteButton.title = "Favorite"
+            favoriteButton.title = "Favourite"
         }
     }
     
     @IBAction func visitRedditButtonTapped(_ sender: UIButton) {
-            let url = gameDetail.redditURL
-            let vc = SFSafariViewController(url: (URL(string: url) ?? URL(string: "https://www.reddit.com/search/)"))!)
-            vc.modalTransitionStyle = .crossDissolve
-            self.present(vc, animated: true)
+        if gameDetail.redditURL != "" {
+            if let url = gameDetail.redditURL {
+                let vc = SFSafariViewController(url: URL(string: url)!)
+                vc.modalPresentationStyle = .popover
+                vc.modalTransitionStyle = .crossDissolve
+                self.present(vc, animated: true)
+            }
+        } else {
+            sorryMessage.text = "😢 Sorry, game you searched does not have reddit page."
+            sorryMessage.isHidden = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                self.sorryMessage.isHidden = true
+            }
+        }
     }
     
     @IBAction func visitWebbsiteButtonTapped(_ sender: UIButton) {
-        let url = gameDetail.websiteURL
-        let vc = SFSafariViewController(url: (URL(string: url) ?? URL(string: "https://www.google.com"))!)
-        // TODO - Change google
-        vc.modalTransitionStyle = .crossDissolve
-        self.present(vc, animated: true)
+        if gameDetail.websiteURL != "" {
+            if let url = gameDetail.websiteURL {
+                let vc = SFSafariViewController(url: URL(string: url)!)
+                vc.modalPresentationStyle = .popover
+                vc.modalTransitionStyle = .flipHorizontal
+                self.present(vc, animated: true)
+            }
+        } else {
+            sorryMessage.text = "😢 Sorry, game you searched does not have website."
+            sorryMessage.isHidden = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                self.sorryMessage.isHidden = true
+            }
+        }
+        
     }
+    
 }
 
 //MARK: - Network Request

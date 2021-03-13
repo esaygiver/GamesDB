@@ -335,6 +335,15 @@
                                     <action selector="visitWebbsiteButtonTapped:" destination="ijN-ed-FMl" eventType="touchUpInside" id="DUm-97-1wL"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sorry Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="siJ-xT-2vq">
+                                <rect key="frame" x="10" y="605" width="394" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="1qF-4H-dD9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -350,11 +359,14 @@
                             <constraint firstItem="ASi-e5-Za4" firstAttribute="trailing" secondItem="aHb-Tu-Nja" secondAttribute="trailing" constant="16" id="Oih-PX-xkZ"/>
                             <constraint firstItem="f9W-lN-vPn" firstAttribute="top" secondItem="J3Y-Si-o0F" secondAttribute="bottom" constant="16" id="TUI-af-Wci"/>
                             <constraint firstItem="ASi-e5-Za4" firstAttribute="trailing" secondItem="CjR-iq-zqC" secondAttribute="trailing" constant="16" id="UBv-eS-oVH"/>
+                            <constraint firstItem="siJ-xT-2vq" firstAttribute="leading" secondItem="ASi-e5-Za4" secondAttribute="leading" constant="10" id="XI6-W1-ydD"/>
                             <constraint firstItem="f9W-lN-vPn" firstAttribute="leading" secondItem="ASi-e5-Za4" secondAttribute="leading" constant="16" id="XUb-6w-v2x"/>
                             <constraint firstItem="Ti1-sd-V9K" firstAttribute="leading" secondItem="ASi-e5-Za4" secondAttribute="leading" id="Zzp-NZ-IBL"/>
                             <constraint firstItem="TCk-CM-zyZ" firstAttribute="top" secondItem="aHb-Tu-Nja" secondAttribute="bottom" constant="30" id="b6x-o7-XZt"/>
                             <constraint firstItem="QT1-ut-52A" firstAttribute="centerX" secondItem="Mww-GO-e2a" secondAttribute="centerX" id="fIo-Xe-sO2"/>
                             <constraint firstItem="QT1-ut-52A" firstAttribute="top" secondItem="TCk-CM-zyZ" secondAttribute="bottom" constant="16" id="lAx-EV-nOU"/>
+                            <constraint firstItem="ASi-e5-Za4" firstAttribute="trailing" secondItem="siJ-xT-2vq" secondAttribute="trailing" constant="10" id="reL-x3-ppB"/>
+                            <constraint firstItem="siJ-xT-2vq" firstAttribute="top" secondItem="QT1-ut-52A" secondAttribute="bottom" constant="30" id="sNj-ym-aOG"/>
                             <constraint firstItem="ASi-e5-Za4" firstAttribute="trailing" secondItem="f9W-lN-vPn" secondAttribute="trailing" constant="16" id="yGe-69-oNp"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ASi-e5-Za4"/>
@@ -372,6 +384,7 @@
                         <outlet property="gameImageView" destination="J3Y-Si-o0F" id="avN-H9-Zzd"/>
                         <outlet property="gameTitle" destination="Ae4-fn-IQa" id="Nr0-VI-B8M"/>
                         <outlet property="readMoreButton" destination="aHb-Tu-Nja" id="fkD-3n-aQw"/>
+                        <outlet property="sorryMessage" destination="siJ-xT-2vq" id="3VV-vt-TG9"/>
                         <outlet property="visitRedditButton" destination="TCk-CM-zyZ" id="4au-v3-1Cg"/>
                         <outlet property="visitWebsiteButton" destination="QT1-ut-52A" id="4zU-zS-PdN"/>
                     </connections>

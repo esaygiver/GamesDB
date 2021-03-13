@@ -12,8 +12,8 @@ struct GameDetail: Codable {
     let name: String
     let description: String
     let backgroundImage: String
-    let redditURL: String
-    let websiteURL: String
+    let redditURL: String?
+    let websiteURL: String?
     
     private enum CodingKeys: String, CodingKey {
         case name, description, backgroundImage = "background_image", redditURL = "reddit_url", websiteURL = "website"
