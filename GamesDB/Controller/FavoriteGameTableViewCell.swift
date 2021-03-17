@@ -17,8 +17,8 @@ final class FavoriteGameTableViewCell: UITableViewCell {
     @IBOutlet weak var gameGenres: UILabel!
     
     func configureOutlets(on model: FavoriteGames) {
-        gameTitle.text = model.gameTitle ?? "-"
-        gameImage.fetchImage(from: model.gameBackdrop ?? "https://media.rawg.io/media/games/295/295eb868c241e6ad32ac033b8e6a2ede.jpg")
+        gameTitle.text = model.gameTitle
+        gameImage.fetchImage(from: model.gameBackdrop)
         // TODO - There will be white screen URL besides this game image url
       //  gameMetacritic.text = model.gameMetacritic?.description ?? "-"
         

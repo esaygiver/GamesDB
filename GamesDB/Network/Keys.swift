@@ -16,9 +16,9 @@ enum Keys: String, CaseIterable {
 func getURL(on platform: Keys) -> String {
     switch platform {
     case .APIKey:
-        return "59a7ebbbcb214c95b1a528c3adb20f58"
+        return Configuration.APIKey
     case .baseURL:
-        return "https://api.rawg.io/api/games"
+        return Configuration.baseURL
     }
     
 }

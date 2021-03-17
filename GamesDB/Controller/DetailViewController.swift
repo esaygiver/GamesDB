@@ -54,21 +54,19 @@ final class DetailViewController: UIViewController {
     }
     
     @IBAction func readMeButtonTapped(_ sender: UIButton) {
-        
         if gameDescrition.numberOfLines == 4 {
-            gameDescrition.numberOfLines = 18
+            gameDescrition.numberOfLines = 14
         } else {
             gameDescrition.numberOfLines = 4
         }
     }
     
     @IBAction func favoriteButtonTapped(_ sender: UIButton) {
-        
+        let favoriteGame = FavoriteGames()
         if favoriteButton.title == "Favorite" {
             favoriteButton.title = "Favorited"
             // when we tapped fav button realm begins write game data
             realm.beginWrite()
-            let favoriteGame = FavoriteGames()
             favoriteGame.gameID = GameDataFromSearchVC.id
             favoriteGame.gameTitle = GameDataFromSearchVC.name!
             favoriteGame.gameBackdrop = GameDataFromSearchVC.backgroundImage!
@@ -77,12 +75,10 @@ final class DetailViewController: UIViewController {
             realm.add(favoriteGame)
             realm.refresh()
             try! realm.commitWrite()
-        print(FavoriteGames().gameID)
-        print(GameDataFromSearchVC.name)
         } else {
             favoriteButton.title = "Favorite"
 //            realm.beginWrite()
-//            realm.delete(selectedFavoriteGame)
+//            realm.delete(favoriteGame)
 //            realm.refresh()
 //            try! realm.commitWrite()
         }
@@ -93,6 +89,7 @@ final class DetailViewController: UIViewController {
             if let url = gameDetail.redditURL {
                 let vc = SFSafariViewController(url: URL(string: url)!)
                 vc.modalPresentationStyle = .popover
+                // modalPresentationStyle needs to be changed before using iPad. -> .fullScreen
                 vc.modalTransitionStyle = .crossDissolve
                 self.present(vc, animated: true)
             }
@@ -110,6 +107,7 @@ final class DetailViewController: UIViewController {
             if let url = gameDetail.websiteURL {
                 let vc = SFSafariViewController(url: URL(string: url)!)
                 vc.modalPresentationStyle = .popover
+                // modalPresentationStyle needs to be changed before using iPad. -> .fullScreen
                 vc.modalTransitionStyle = .flipHorizontal
                 self.present(vc, animated: true)
             }

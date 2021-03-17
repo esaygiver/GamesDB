@@ -61,6 +61,7 @@ final class SearchViewController: UIViewController {
         activityIndicator.startAnimating()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.allowsMultipleSelection = true
         searchBar.delegate = self
         searchBar.enablesReturnKeyAutomatically = false
     }
@@ -159,6 +160,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "gameCell", for: indexPath) as! GameTableViewCell
         let selectedGameCell = searchingGamesData[indexPath.row]
         cell.configureOutlets(on: selectedGameCell)
+        cell.selectionStyle = .none
+        if cell.contentView.backgroundColor == #colorLiteral(red: 0.8783541322, green: 0.8784807324, blue: 0.8783264756, alpha: 1) {
+            cell.contentView.backgroundColor = #colorLiteral(red: 0.8783541322, green: 0.8784807324, blue: 0.8783264756, alpha: 1)
+        } else {
+            cell.contentView.backgroundColor = .white
+        }
         return cell
     }
     
@@ -171,11 +178,20 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         detailVC.GameDataFromSearchVC = selectedGame
         detailVC.modalTransitionStyle = .flipHorizontal
         self.navigationController?.pushViewController(detailVC, animated: true)
-    }
-    
-    //MARK: - pagination
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
+        if let cell = tableView.cellForRow(at: indexPath) as? GameTableViewCell {
+            cell.contentView.backgroundColor = #colorLiteral(red: 0.8783541322, green: 0.8784807324, blue: 0.8783264756, alpha: 1)
+        }
+    }
+
+
+
+
+
+    
+    //MARK: - Pagination
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    
         if indexPath.row == searchingGamesData.count - 1 {
             activityIndicator.isHidden = false
             activityIndicator.startAnimating()

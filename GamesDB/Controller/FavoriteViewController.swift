@@ -41,7 +41,15 @@ final class FavoriteViewController: UIViewController {
         favoriteGames = Array(realm.objects(FavoriteGames.self))
         getDelegations()
         activityIndicator.isHidden = true
-    }
+        realm.autorefresh = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                self.tableView.reloadData()
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.hidesWhenStopped = true
+            })
+        }
+    
+    
     
     func getDelegations() {
         tableView.delegate = self
@@ -49,19 +57,13 @@ final class FavoriteViewController: UIViewController {
         tableView.allowsMultipleSelectionDuringEditing = false
     }
     
-    @IBAction func refreshButtonTapped(_ sender: UIButton) {
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
-        favoriteGames = Array(realm.objects(FavoriteGames.self))
-        realm.autorefresh = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-            self.tableView.reloadData()
-            self.activityIndicator.stopAnimating()
-            self.activityIndicator.hidesWhenStopped = true
-        })
-    }
-}
+//    @IBAction func refreshButtonTapped(_ sender: UIButton) {
+//        activityIndicator.isHidden = false
+//        activityIndicator.startAnimating()
+//        favoriteGames = Array(realm.objects(FavoriteGames.self))
+//
 
+}
 
 //MARK: - TableView Delegate & Datasource
 extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
