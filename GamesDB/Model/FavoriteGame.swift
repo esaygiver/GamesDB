@@ -15,11 +15,15 @@ class FavoriteGame: Object {
     @objc dynamic var gameMetacritic: Int = 1
     @objc dynamic var gameID: Int = 1
     
-    var genreInstances: [Genre]?
+//    var isFavoriButtonTapped: Bool = false
     
-//    convenience init(with game: Game) {
-//        self.init()
-//        self.gameTitle = game.name
-//        // TODO
-//    }
+   // var genreInstances: [Genre]?
+    
+    convenience init(with game: Game) {
+        self.init()
+        self.gameTitle = game.name!
+        self.gameBackdrop = game.backgroundImage!
+        self.gameMetacritic = game.metacritic ?? 90
+        self.gameID = game.id
+    }
 }

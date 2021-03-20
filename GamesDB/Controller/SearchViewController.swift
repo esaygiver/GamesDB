@@ -8,12 +8,6 @@
 
 import UIKit
 
-enum SearchListState: String {
-    case loaded
-    case searching
-    case empty
-}
-
 final class SearchViewController: UIViewController {
     
     //MARK: - IBOutlets
@@ -53,16 +47,17 @@ final class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getDelegations()
+        setDelegations()
         gamesAtMainScreen(page: nextPage)
     }
     
-    func getDelegations() {
+    func setDelegations() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.allowsMultipleSelection = true
         searchBar.delegate = self
         searchBar.enablesReturnKeyAutomatically = false
+        activityIndicator.isHidden = true
     }
 }
 
@@ -161,6 +156,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         searchingGamesData[indexPath.row].isMovieVisitedBefore = true
+        
         let selectedGame = searchingGamesData[indexPath.row]
         let detailVC = storyboard?.instantiateViewController(identifier: "DetailViewController") as! DetailViewController
         detailVC.gameDataFromSearchVC = selectedGame
@@ -186,14 +182,14 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 //MARK: - loading
 extension SearchViewController {
     func setLoadingMoreState(to isLoading: Bool) {
-        if (isLoading) {
+        if isLoading {
             UIView.animate(withDuration: 0.7) {
                 self.activityIndicator.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
                 self.activityIndicatorHeight.constant = 80
             }
             activityIndicator.startAnimating()
         } else {
-            UIView.animate(withDuration: 0.5) {
+            UIView.animate(withDuration: 0.7) {
                 self.activityIndicator.transform = .identity
                 self.activityIndicatorHeight.constant = 0
             }

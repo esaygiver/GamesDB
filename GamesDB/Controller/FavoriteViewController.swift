@@ -9,11 +9,6 @@
 import UIKit
 import RealmSwift
 
-enum FavoriteListState: String {
-    case loaded
-    case empty
-}
-
 final class FavoriteViewController: UIViewController {
     
     //MARK: - IBOutlets
@@ -23,7 +18,7 @@ final class FavoriteViewController: UIViewController {
     
     var favoriteGames = [FavoriteGame]()
     private let realm = try! Realm()
-    
+
     var screenState: FavoriteListState? {
         didSet {
             if screenState == .loaded {
@@ -42,7 +37,7 @@ final class FavoriteViewController: UIViewController {
         updateLayoutAfterChanges()
         setDelegations()
         InternalEvent.addObservers(observers: observers, controller: self)
-        checkingFavoriteGamesState()
+
     }
     
     // Internal event observers
@@ -60,6 +55,7 @@ final class FavoriteViewController: UIViewController {
         tableView.dataSource = self
         tableView.allowsMultipleSelectionDuringEditing = false
     }
+    
     
     func updateData() {
         favoriteGames = Array(realm.objects(FavoriteGame.self))

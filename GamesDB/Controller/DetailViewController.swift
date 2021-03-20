@@ -31,6 +31,7 @@ final class DetailViewController: UIViewController {
     lazy var networkManager = NetworkManager()
     var gameDetail: GameDetail!
     var gameDataFromSearchVC: Game!
+    var favoriteGames = [FavoriteGame]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,21 +61,31 @@ final class DetailViewController: UIViewController {
     }
     
     @IBAction func favoriteButtonTapped(_ sender: UIButton) {
-        let favoriteGame = FavoriteGame()
+    
+        let selectedFavoriteGame = FavoriteGame(with: gameDataFromSearchVC)
+        let nonDuplicatedIDArray = Array(realm.objects(FavoriteGame.self)).map({ $0.gameID })
+        
         if favoriteButton.title == "Favorite" {
+            if nonDuplicatedIDArray.contains(selectedFavoriteGame.gameID) {
+                realm.refresh()
+                print("We have this in favorites, don't need add!")
+            } else {
+                realm.beginWrite()
+                realm.add(selectedFavoriteGame)
+                favoriteGames.append(selectedFavoriteGame)
+                realm.refresh()
+                try! realm.commitWrite()
+            }
             favoriteButton.title = "Favorited"
-            // when we tapped fav button realm begins write game data
+                
+        } else {
             realm.beginWrite()
-            favoriteGame.gameID = gameDataFromSearchVC.id
-            favoriteGame.gameTitle = gameDataFromSearchVC.name!
-            favoriteGame.gameBackdrop = gameDataFromSearchVC.backgroundImage!
-      //      favoriteGame.gameGenreInstances = GameDataFromSearchVC.genres
-            favoriteGame.gameMetacritic = gameDataFromSearchVC.metacritic ?? 90
-            realm.add(favoriteGame)
+            realm.delete(favoriteGames.last!)
             realm.refresh()
             try! realm.commitWrite()
-        } else {
+            
             favoriteButton.title = "Favorite"
+            
         }
         
         InternalEvent.gameFavorited.send(attachment: nil)
@@ -114,9 +125,7 @@ final class DetailViewController: UIViewController {
                 self.sorryMessage.isHidden = true
             }
         }
-        
     }
-    
 }
 
 //MARK: - Network Request
