@@ -8,12 +8,16 @@
 
 import Foundation
 
-struct Genre: Codable {
+struct Genre: Codable, Hashable {
     let id: Int
     let name: String
     
     private enum CodingKeys: String, CodingKey {
         case id, name
+    }
+    
+    static func == (lhs: Genre, rhs: Genre) -> Bool {
+        return rhs.id == lhs.id
     }
 }
 

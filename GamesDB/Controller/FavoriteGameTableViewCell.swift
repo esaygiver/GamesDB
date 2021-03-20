@@ -20,7 +20,7 @@ final class FavoriteGameTableViewCell: UITableViewCell {
         gameTitle.text = model.gameTitle
         gameImage.fetchImage(from: model.gameBackdrop)
         // TODO - There will be white screen URL besides this game image url
-      //  gameMetacritic.text = model.gameMetacritic?.description ?? "-"
+        gameMetacritic.text = model.gameMetacritic.description ?? "-"
         
 //        if model.gameGender.isEmpty {
 //            gameGenres.text = "-"
@@ -35,3 +35,10 @@ final class FavoriteGameTableViewCell: UITableViewCell {
 
 
 }
+//
+//
+//final class FavoriteGameTableViewCell2: GameTableViewCell {
+//    func configureOutlets(on model: FavoriteGames) {
+//        
+//    }
+//}

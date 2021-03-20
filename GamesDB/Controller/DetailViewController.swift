@@ -30,15 +30,13 @@ final class DetailViewController: UIViewController {
     private let realm = try! Realm()
     lazy var networkManager = NetworkManager()
     var gameDetail: GameDetail!
-    var GameDataFromSearchVC: Game!
-    lazy var gameID: Int = 1
-    // for default game selection, it will be changed by indexPath.row
+    var gameDataFromSearchVC: Game!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupButtons()
-        fetchGameDetails(gameID: gameID)
+        fetchGameDetails(gameID: gameDataFromSearchVC.id)
     }
     
     func updateOutlets() {
@@ -55,7 +53,7 @@ final class DetailViewController: UIViewController {
     
     @IBAction func readMeButtonTapped(_ sender: UIButton) {
         if gameDescrition.numberOfLines == 4 {
-            gameDescrition.numberOfLines = 14
+            gameDescrition.numberOfLines = 0
         } else {
             gameDescrition.numberOfLines = 4
         }
@@ -67,21 +65,19 @@ final class DetailViewController: UIViewController {
             favoriteButton.title = "Favorited"
             // when we tapped fav button realm begins write game data
             realm.beginWrite()
-            favoriteGame.gameID = GameDataFromSearchVC.id
-            favoriteGame.gameTitle = GameDataFromSearchVC.name!
-            favoriteGame.gameBackdrop = GameDataFromSearchVC.backgroundImage!
-         //   selectedFavoriteGame.gameGender = GameDataFromSearchVC.genres
-         //   selectedFavoriteGame.gameMetacritic = GameDataFromSearchVC.metacritic!
+            favoriteGame.gameID = gameDataFromSearchVC.id
+            favoriteGame.gameTitle = gameDataFromSearchVC.name!
+            favoriteGame.gameBackdrop = gameDataFromSearchVC.backgroundImage!
+      //      favoriteGame.gameGenreInstances = GameDataFromSearchVC.genres
+            favoriteGame.gameMetacritic = gameDataFromSearchVC.metacritic ?? 90
             realm.add(favoriteGame)
             realm.refresh()
             try! realm.commitWrite()
         } else {
             favoriteButton.title = "Favorite"
-//            realm.beginWrite()
-//            realm.delete(favoriteGame)
-//            realm.refresh()
-//            try! realm.commitWrite()
         }
+        
+        InternalEvent.gameFavorited.send(attachment: nil)
     }
     
     @IBAction func visitRedditButtonTapped(_ sender: UIButton) {
@@ -125,12 +121,10 @@ final class DetailViewController: UIViewController {
 
 //MARK: - Network Request
 extension DetailViewController {
-    
     func fetchGameDetails(gameID: Int) {
         networkManager.fetchGamesDetails(gameID: gameID) { [weak self] result in
             guard let self = self else { return }
             self.gameDetail = result
-            print(self.gameDetail.name, self.gameDetail.description)
             DispatchQueue.main.async {
                 self.updateOutlets()
             }

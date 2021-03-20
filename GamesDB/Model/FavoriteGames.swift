@@ -11,10 +11,15 @@ import RealmSwift
 
 class FavoriteGames: Object {
     @objc dynamic var gameTitle: String = ""
-//    @objc dynamic var gameGender: [Genre] = []
     @objc dynamic var gameBackdrop: String = ""
-//    dynamic var gameMetacritic: Int?
+    @objc dynamic var gameMetacritic: Int = 1
     @objc dynamic var gameID: Int = 1
     
+    var genreInstances: [Genre]?
+    
+//    convenience init(with game: Game) {
+//        self.init()
+//        self.gameTitle = game.name
+//        // TODO
+//    }
 }
-

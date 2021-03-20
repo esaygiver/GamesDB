@@ -16,6 +16,8 @@
 		8447F9C925F8C1BE00AF1731 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8447F9C825F8C1BE00AF1731 /* Assets.xcassets */; };
 		8447F9CC25F8C1BE00AF1731 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8447F9CA25F8C1BE00AF1731 /* LaunchScreen.storyboard */; };
 		8456399B26029F3C00E2CACB /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8456399A26029F3C00E2CACB /* Configuration.swift */; };
+		8456399D26036E1900E2CACB /* Array+Unique.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8456399C26036E1900E2CACB /* Array+Unique.swift */; };
+		845639A02604DD7100E2CACB /* InternalEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8456399F2604DD7100E2CACB /* InternalEvent.swift */; };
 		84F3711D25F8CD920061C05C /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F3711C25F8CD920061C05C /* FavoriteViewController.swift */; };
 		84F3712025F8D0EC0061C05C /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F3711F25F8D0EC0061C05C /* Game.swift */; };
 		84F3712225F8D21A0061C05C /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F3712125F8D21A0061C05C /* GameData.swift */; };
@@ -45,6 +47,8 @@
 		8447F9CB25F8C1BE00AF1731 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8447F9CD25F8C1BE00AF1731 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8456399A26029F3C00E2CACB /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		8456399C26036E1900E2CACB /* Array+Unique.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Unique.swift"; sourceTree = "<group>"; };
+		8456399F2604DD7100E2CACB /* InternalEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalEvent.swift; sourceTree = "<group>"; };
 		84F3711C25F8CD920061C05C /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		84F3711F25F8D0EC0061C05C /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		84F3712125F8D21A0061C05C /* GameData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
@@ -104,9 +108,10 @@
 		8447F9BE25F8C1B900AF1731 /* GamesDB */ = {
 			isa = PBXGroup;
 			children = (
+				8451016425F8C341001E13C4 /* App */,
+				8456399E2604DD6200E2CACB /* Util */,
 				8456399926029F1400E2CACB /* Configuration */,
 				84F3713125F961380061C05C /* Extensions */,
-				8451016425F8C341001E13C4 /* App */,
 				84F3712A25F95B510061C05C /* Protocols */,
 				84F3712325F954A60061C05C /* Network */,
 				84F3711E25F8CDD20061C05C /* Model */,
@@ -164,6 +169,14 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
+		8456399E2604DD6200E2CACB /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				8456399F2604DD7100E2CACB /* InternalEvent.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
 		84F3711E25F8CDD20061C05C /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,6 +212,7 @@
 			children = (
 				84F3713225F961570061C05C /* ImageView + KF.swift */,
 				84F3713625FA9DF20061C05C /* UIButton.swift */,
+				8456399C26036E1900E2CACB /* Array+Unique.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -340,6 +354,8 @@
 				8447F9C225F8C1B900AF1731 /* SceneDelegate.swift in Sources */,
 				84F3712525F954BA0061C05C /* API.swift in Sources */,
 				84F3712C25F95B5F0061C05C /* Networkable.swift in Sources */,
+				845639A02604DD7100E2CACB /* InternalEvent.swift in Sources */,
+				8456399D26036E1900E2CACB /* Array+Unique.swift in Sources */,
 				840D8C4925FCE9AE0001C52D /* FavoriteGames.swift in Sources */,
 				84F3712725F958EC0061C05C /* Genre.swift in Sources */,
 				840D8C4B25FCEECC0001C52D /* FavoriteGameTableViewCell.swift in Sources */,

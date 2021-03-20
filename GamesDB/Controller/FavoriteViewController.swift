@@ -13,56 +13,54 @@ final class FavoriteViewController: UIViewController {
     
     //MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
-    //        willSet {
-    //            if favoriteGames.count == 0 {
-    //                tableView.isHidden = true
-    //                filterView.isHidden = false
-    //            } else {
-    //                tableView.isHidden = false
-    //                filterView.isHidden = true
-    //            }
-    //        }
-    //    }
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var favoriteNavigationTitle: UINavigationItem! {
-        didSet {
-            DispatchQueue.main.async {
-                self.favoriteNavigationTitle.title = "Favorites(\(self.favoriteGames.count))"
-            }
-        }
-    }
+    @IBOutlet weak var favoriteNavigationTitle: UINavigationItem!
+    
     var favoriteGames = [FavoriteGames]()
     private let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        favoriteGames = Array(realm.objects(FavoriteGames.self))
-        getDelegations()
-        activityIndicator.isHidden = true
-        realm.autorefresh = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                self.tableView.reloadData()
-                self.activityIndicator.stopAnimating()
-                self.activityIndicator.hidesWhenStopped = true
-            })
-        }
+        updateData()
+        updateLayoutAfterChanges()
+        setDelegations()
+        InternalEvent.addObservers(observers: observers, controller: self)
+    }
     
+    // Internal event observers
+    let observers: [(event: InternalEvent, selector: Selector)] = [
+        (event: .gameFavorited, selector: #selector(FavoriteViewController.refreshScreen)),
+    ]
     
-    
-    func getDelegations() {
+    @objc func refreshScreen() {
+        updateData()
+        updateLayoutAfterChanges()
+    }
+
+    func setDelegations() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.allowsMultipleSelectionDuringEditing = false
     }
     
-//    @IBAction func refreshButtonTapped(_ sender: UIButton) {
-//        activityIndicator.isHidden = false
-//        activityIndicator.startAnimating()
-//        favoriteGames = Array(realm.objects(FavoriteGames.self))
-//
+    // FIXME: remove this
+    @IBAction func refreshButtonTapped(_ sender: UIButton) {
+        updateData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            self.updateLayoutAfterChanges()
+        })
+    }
+    
+    func updateData() {
+        favoriteGames = Array(realm.objects(FavoriteGames.self))
+        realm.autorefresh = true
+    }
 
+    func updateLayoutAfterChanges() {
+        self.tableView.reloadData()
+        self.favoriteNavigationTitle.title = "Favorites(\(self.favoriteGames.count))"
+    }
 }
 
 //MARK: - TableView Delegate & Datasource
@@ -96,14 +94,11 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
         realm.beginWrite()
         realm.delete(favoriteGames[indexPath.row])
-        DispatchQueue.main.async {
-            self.favoriteGames.remove(at: indexPath.row)
-            self.tableView.reloadData()
-        }
+        self.favoriteGames.remove(at: indexPath.row)
         try! realm.commitWrite()
+        updateLayoutAfterChanges()
     }
     
 }

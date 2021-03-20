@@ -20,6 +20,7 @@ final class SearchViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var activityIndicatorHeight: NSLayoutConstraint!
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var noGameReturnView: UIView!
     
@@ -57,8 +58,6 @@ final class SearchViewController: UIViewController {
     }
     
     func getDelegations() {
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.allowsMultipleSelection = true
@@ -73,6 +72,7 @@ extension SearchViewController {
     func gamesAtMainScreen(page: Int) {
         networkManager.fetchDefaultGames(page: page) { [weak self] results in
             guard let self = self else { return }
+            self.setLoadingMoreState(to: false)
             if results.isEmpty {
                 self.screenState = .empty
             } else {
@@ -81,8 +81,6 @@ extension SearchViewController {
                 self.screenState = .loaded
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
-                    self.activityIndicator.stopAnimating()
-                    self.activityIndicator.hidesWhenStopped = true
                 }
             }
         }
@@ -91,17 +89,14 @@ extension SearchViewController {
     func fetchGames(page: Int, query: String) {
         networkManager.fetchGamesWithQuery(page: page, query: query) { [weak self] results in
             guard let self = self else { return }
+            self.setLoadingMoreState(to: false)
             if results.isEmpty {
                 self.screenState = .empty
-                self.activityIndicator.stopAnimating()
-                self.activityIndicator.hidesWhenStopped = true
             } else {
                 self.searchingGamesData.append(contentsOf: results)
                 self.screenState = .loaded
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
-                    self.activityIndicator.stopAnimating()
-                    self.activityIndicator.hidesWhenStopped = true
                 }
             }
         }
@@ -117,12 +112,12 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         nextPage = 1
-//        searchingGamesData = []
-//        gamesAtMainScreen(page: nextPage)
+        //        searchingGamesData = []
+        //        gamesAtMainScreen(page: nextPage)
         searchBar.endEditing(true)
-//        DispatchQueue.main.async {
-//            self.tableView.reloadData()
-//        }
+        //        DispatchQueue.main.async {
+        //            self.tableView.reloadData()
+        //        }
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -160,22 +155,15 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "gameCell", for: indexPath) as! GameTableViewCell
         let selectedGameCell = searchingGamesData[indexPath.row]
         cell.configureOutlets(on: selectedGameCell)
-        cell.selectionStyle = .none
-        if cell.contentView.backgroundColor == #colorLiteral(red: 0.8783541322, green: 0.8784807324, blue: 0.8783264756, alpha: 1) {
-            cell.contentView.backgroundColor = #colorLiteral(red: 0.8783541322, green: 0.8784807324, blue: 0.8783264756, alpha: 1)
-        } else {
-            cell.contentView.backgroundColor = .white
-        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        searchingGamesData[indexPath.row].isMovieVisitedBefore = true
         let selectedGame = searchingGamesData[indexPath.row]
-        let selectedGameID = searchingGamesData[indexPath.row].id
         let detailVC = storyboard?.instantiateViewController(identifier: "DetailViewController") as! DetailViewController
-        detailVC.gameID = selectedGameID
-        detailVC.GameDataFromSearchVC = selectedGame
+        detailVC.gameDataFromSearchVC = selectedGame
         detailVC.modalTransitionStyle = .flipHorizontal
         self.navigationController?.pushViewController(detailVC, animated: true)
         
@@ -183,22 +171,37 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             cell.contentView.backgroundColor = #colorLiteral(red: 0.8783541322, green: 0.8784807324, blue: 0.8783264756, alpha: 1)
         }
     }
-
-
-
-
-
     
     //MARK: - Pagination
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-    
+        
         if indexPath.row == searchingGamesData.count - 1 {
-            activityIndicator.isHidden = false
-            activityIndicator.startAnimating()
+            setLoadingMoreState(to: true)
             nextPage += 1
             fetchGames(page: nextPage, query: queryForPagination)
         }
     }
 }
+
+//MARK: - loading
+extension SearchViewController {
+    func setLoadingMoreState(to isLoading: Bool) {
+        if (isLoading) {
+            UIView.animate(withDuration: 0.7) {
+                self.activityIndicator.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+                self.activityIndicatorHeight.constant = 80
+            }
+            activityIndicator.startAnimating()
+        } else {
+            UIView.animate(withDuration: 0.5) {
+                self.activityIndicator.transform = .identity
+                self.activityIndicatorHeight.constant = 0
+            }
+            activityIndicator.stopAnimating()
+            activityIndicator.hidesWhenStopped = true
+        }
+    }
+}
+
 
 
