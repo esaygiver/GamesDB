@@ -9,16 +9,32 @@
 import UIKit
 import RealmSwift
 
+enum FavoriteListState: String {
+    case loaded
+    case empty
+}
+
 final class FavoriteViewController: UIViewController {
     
     //MARK: - IBOutlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var filterView: UIView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var favoriteNavigationTitle: UINavigationItem!
     
-    var favoriteGames = [FavoriteGames]()
+    var favoriteGames = [FavoriteGame]()
     private let realm = try! Realm()
+    
+    var screenState: FavoriteListState? {
+        didSet {
+            if screenState == .loaded {
+                filterView.isHidden = true
+                tableView.isHidden = false
+            } else {
+                tableView.isHidden = true
+                filterView.isHidden = false
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +42,7 @@ final class FavoriteViewController: UIViewController {
         updateLayoutAfterChanges()
         setDelegations()
         InternalEvent.addObservers(observers: observers, controller: self)
+        checkingFavoriteGamesState()
     }
     
     // Internal event observers
@@ -37,29 +54,31 @@ final class FavoriteViewController: UIViewController {
         updateData()
         updateLayoutAfterChanges()
     }
-
+    
     func setDelegations() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.allowsMultipleSelectionDuringEditing = false
     }
     
-    // FIXME: remove this
-    @IBAction func refreshButtonTapped(_ sender: UIButton) {
-        updateData()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-            self.updateLayoutAfterChanges()
-        })
-    }
-    
     func updateData() {
-        favoriteGames = Array(realm.objects(FavoriteGames.self))
+        favoriteGames = Array(realm.objects(FavoriteGame.self))
         realm.autorefresh = true
     }
 
     func updateLayoutAfterChanges() {
         self.tableView.reloadData()
         self.favoriteNavigationTitle.title = "Favorites(\(self.favoriteGames.count))"
+        checkingFavoriteGamesState()
+    }
+    
+    func checkingFavoriteGamesState() {
+        if self.favoriteGames.count == 0 {
+            screenState = .empty
+            self.favoriteNavigationTitle.title = "Favorites"
+        } else {
+            screenState = .loaded
+        }
     }
 }
 

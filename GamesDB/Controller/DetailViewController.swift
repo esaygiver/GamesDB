@@ -60,7 +60,7 @@ final class DetailViewController: UIViewController {
     }
     
     @IBAction func favoriteButtonTapped(_ sender: UIButton) {
-        let favoriteGame = FavoriteGames()
+        let favoriteGame = FavoriteGame()
         if favoriteButton.title == "Favorite" {
             favoriteButton.title = "Favorited"
             // when we tapped fav button realm begins write game data

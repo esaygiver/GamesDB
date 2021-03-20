@@ -16,7 +16,7 @@ final class FavoriteGameTableViewCell: UITableViewCell {
     @IBOutlet weak var gameMetacritic: UILabel!
     @IBOutlet weak var gameGenres: UILabel!
     
-    func configureOutlets(on model: FavoriteGames) {
+    func configureOutlets(on model: FavoriteGame) {
         gameTitle.text = model.gameTitle
         gameImage.fetchImage(from: model.gameBackdrop)
         // TODO - There will be white screen URL besides this game image url
@@ -32,13 +32,4 @@ final class FavoriteGameTableViewCell: UITableViewCell {
 //        }
         
     }
-
-
 }
-//
-//
-//final class FavoriteGameTableViewCell2: GameTableViewCell {
-//    func configureOutlets(on model: FavoriteGames) {
-//        
-//    }
-//}

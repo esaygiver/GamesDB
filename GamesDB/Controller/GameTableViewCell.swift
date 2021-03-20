@@ -23,7 +23,6 @@ final class GameTableViewCell: UITableViewCell {
         super.prepareForReuse()
 
         self.contentView.backgroundColor = game?.isMovieVisitedBefore ?? false ? #colorLiteral(red: 0.8783541322, green: 0.8784807324, blue: 0.8783264756, alpha: 1) : UIColor.white
-
     }
     
     func configureOutlets(on model: Game) {

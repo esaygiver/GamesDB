@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class FavoriteGames: Object {
+class FavoriteGame: Object {
     @objc dynamic var gameTitle: String = ""
     @objc dynamic var gameBackdrop: String = ""
     @objc dynamic var gameMetacritic: Int = 1
