@@ -15,7 +15,8 @@ struct Game: Codable, Hashable {
     let metacritic: Int?
     let genres: [Genre]
     
-    var isMovieVisitedBefore: Bool = false
+    var isGameVisitedBefore: Bool = false
+    var isGameFavoritedOrNot: Bool = false
     
     private enum CodingKeys: String, CodingKey {
         case name, id, metacritic, genres, backgroundImage = "background_image"

@@ -155,11 +155,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        searchingGamesData[indexPath.row].isMovieVisitedBefore = true
+        searchingGamesData[indexPath.row].isGameVisitedBefore = true
         
-        let selectedGame = searchingGamesData[indexPath.row]
         let detailVC = storyboard?.instantiateViewController(identifier: "DetailViewController") as! DetailViewController
-        detailVC.gameDataFromSearchVC = selectedGame
+        detailVC.gameDataFromSearchVC = searchingGamesData[indexPath.row]
         detailVC.modalTransitionStyle = .flipHorizontal
         self.navigationController?.pushViewController(detailVC, animated: true)
         

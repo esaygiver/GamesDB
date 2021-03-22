@@ -22,7 +22,7 @@ final class GameTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
 
-        self.contentView.backgroundColor = game?.isMovieVisitedBefore ?? false ? #colorLiteral(red: 0.8783541322, green: 0.8784807324, blue: 0.8783264756, alpha: 1) : UIColor.white
+        self.contentView.backgroundColor = game?.isGameVisitedBefore ?? false ? #colorLiteral(red: 0.8783541322, green: 0.8784807324, blue: 0.8783264756, alpha: 1) : UIColor.white
     }
     
     func configureOutlets(on model: Game) {
@@ -31,7 +31,7 @@ final class GameTableViewCell: UITableViewCell {
         gameImage.fetchImage(from: model.backgroundImage ?? "https://media.rawg.io/media/games/295/295eb868c241e6ad32ac033b8e6a2ede.jpg")
         // TODO - There will be white screen URL besides this game image url as a default
         gameMetacritic.text = model.metacritic?.description ?? "-"
-        self.contentView.backgroundColor = game?.isMovieVisitedBefore ?? false ? #colorLiteral(red: 0.8783541322, green: 0.8784807324, blue: 0.8783264756, alpha: 1) : UIColor.white
+        self.contentView.backgroundColor = game?.isGameVisitedBefore ?? false ? #colorLiteral(red: 0.8783541322, green: 0.8784807324, blue: 0.8783264756, alpha: 1) : UIColor.white
         
         if model.genres.isEmpty {
             gameGenres.text = "-"

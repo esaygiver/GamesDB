@@ -16,7 +16,7 @@ final class FavoriteViewController: UIViewController {
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var favoriteNavigationTitle: UINavigationItem!
     
-    var favoriteGames = [FavoriteGame]()
+    var favoriteGamesAtFavoriteVC = [FavoriteGame]()
     private let realm = try! Realm()
 
     var screenState: FavoriteListState? {
@@ -58,18 +58,18 @@ final class FavoriteViewController: UIViewController {
     
     
     func updateData() {
-        favoriteGames = Array(realm.objects(FavoriteGame.self))
+        favoriteGamesAtFavoriteVC = Array(realm.objects(FavoriteGame.self))
         realm.autorefresh = true
     }
 
     func updateLayoutAfterChanges() {
         self.tableView.reloadData()
-        self.favoriteNavigationTitle.title = "Favorites(\(self.favoriteGames.count))"
+        self.favoriteNavigationTitle.title = "Favorites(\(self.favoriteGamesAtFavoriteVC.count))"
         checkingFavoriteGamesState()
     }
     
     func checkingFavoriteGamesState() {
-        if self.favoriteGames.count == 0 {
+        if self.favoriteGamesAtFavoriteVC.count == 0 {
             screenState = .empty
             self.favoriteNavigationTitle.title = "Favorites"
         } else {
@@ -85,12 +85,12 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return favoriteGames.count
+        return favoriteGamesAtFavoriteVC.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "favoriteGameCell", for: indexPath) as! FavoriteGameTableViewCell
-        let selectedGameCell = favoriteGames[indexPath.row]
+        let selectedGameCell = favoriteGamesAtFavoriteVC[indexPath.row]
         cell.configureOutlets(on: selectedGameCell)
         return cell
     }
@@ -110,8 +110,8 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         realm.beginWrite()
-        realm.delete(favoriteGames[indexPath.row])
-        self.favoriteGames.remove(at: indexPath.row)
+        realm.delete(favoriteGamesAtFavoriteVC[indexPath.row])
+        self.favoriteGamesAtFavoriteVC.remove(at: indexPath.row)
         try! realm.commitWrite()
         updateLayoutAfterChanges()
     }

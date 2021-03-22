@@ -38,6 +38,7 @@ final class DetailViewController: UIViewController {
         
         setupButtons()
         fetchGameDetails(gameID: gameDataFromSearchVC.id)
+        isGameFavoritedOrNot()
     }
     
     func updateOutlets() {
@@ -61,7 +62,6 @@ final class DetailViewController: UIViewController {
     }
     
     @IBAction func favoriteButtonTapped(_ sender: UIButton) {
-    
         let selectedFavoriteGame = FavoriteGame(with: gameDataFromSearchVC)
         let nonDuplicatedIDArray = Array(realm.objects(FavoriteGame.self)).map({ $0.gameID })
         
@@ -73,24 +73,39 @@ final class DetailViewController: UIViewController {
                 realm.beginWrite()
                 realm.add(selectedFavoriteGame)
                 favoriteGames.append(selectedFavoriteGame)
+                selectedFavoriteGame.isFavoritedGame = true
                 realm.refresh()
                 try! realm.commitWrite()
             }
             favoriteButton.title = "Favorited"
-                
+            
         } else {
             realm.beginWrite()
-            realm.delete(favoriteGames.last!)
+                if !favoriteGames.isEmpty {
+                    realm.delete(favoriteGames.last!)
+                    selectedFavoriteGame.isFavoritedGame = false
+                } else {
+                    print("Favorite List is empty!")
+                }
             realm.refresh()
             try! realm.commitWrite()
-            
             favoriteButton.title = "Favorite"
-            
         }
         
         InternalEvent.gameFavorited.send(attachment: nil)
     }
     
+    func isGameFavoritedOrNot() {
+        let selectedFavoriteGame = FavoriteGame(with: gameDataFromSearchVC)
+        let nonDuplicatedIDArray = Array(realm.objects(FavoriteGame.self)).map({ $0.gameID })
+        if nonDuplicatedIDArray.contains(selectedFavoriteGame.gameID) || selectedFavoriteGame.isFavoritedGame {
+            favoriteButton.title = "Favorited"
+        } else {
+            favoriteButton.title = "Favorite"
+        }
+        InternalEvent.gameFavorited.send(attachment: nil)
+    }
+        
     @IBAction func visitRedditButtonTapped(_ sender: UIButton) {
         if gameDetail.redditURL != "" {
             if let url = gameDetail.redditURL {
@@ -103,7 +118,7 @@ final class DetailViewController: UIViewController {
         } else {
             sorryMessage.text = "😢 Sorry, game you searched does not have reddit page."
             sorryMessage.isHidden = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 self.sorryMessage.isHidden = true
             }
         }
@@ -121,7 +136,7 @@ final class DetailViewController: UIViewController {
         } else {
             sorryMessage.text = "😢 Sorry, game you searched does not have website."
             sorryMessage.isHidden = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 self.sorryMessage.isHidden = true
             }
         }

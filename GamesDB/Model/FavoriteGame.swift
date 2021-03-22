@@ -15,7 +15,7 @@ class FavoriteGame: Object {
     @objc dynamic var gameMetacritic: Int = 1
     @objc dynamic var gameID: Int = 1
     
-//    var isFavoriButtonTapped: Bool = false
+    var isFavoritedGame: Bool = false
     
    // var genreInstances: [Genre]?
     
