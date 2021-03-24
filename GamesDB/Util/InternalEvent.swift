@@ -11,8 +11,7 @@ import Foundation
 enum InternalEvent: String {
 
     case gameFavorited
-    
-    
+
     var attachmentName: String {
         switch self {
         case .gameFavorited:

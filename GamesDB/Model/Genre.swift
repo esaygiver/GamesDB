@@ -16,8 +16,5 @@ struct Genre: Codable, Hashable {
         case id, name
     }
     
-    static func == (lhs: Genre, rhs: Genre) -> Bool {
-        return rhs.id == lhs.id
-    }
 }
 

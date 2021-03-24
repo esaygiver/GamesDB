@@ -16,13 +16,8 @@ struct Game: Codable, Hashable {
     let genres: [Genre]
     
     var isGameVisitedBefore: Bool = false
-    var isGameFavoritedOrNot: Bool = false
     
     private enum CodingKeys: String, CodingKey {
         case name, id, metacritic, genres, backgroundImage = "background_image"
-    }
-    
-    static func == (lhs: Game, rhs: Game) -> Bool {
-        return rhs.id == lhs.id
     }
 }

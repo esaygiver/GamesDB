@@ -18,7 +18,7 @@ final class FavoriteViewController: UIViewController {
     
     var favoriteGamesAtFavoriteVC = [FavoriteGame]()
     private let realm = try! Realm()
-
+    
     var screenState: FavoriteListState? {
         didSet {
             if screenState == .loaded {
@@ -37,7 +37,7 @@ final class FavoriteViewController: UIViewController {
         updateLayoutAfterChanges()
         setDelegations()
         InternalEvent.addObservers(observers: observers, controller: self)
-
+        
     }
     
     // Internal event observers
@@ -61,7 +61,7 @@ final class FavoriteViewController: UIViewController {
         favoriteGamesAtFavoriteVC = Array(realm.objects(FavoriteGame.self))
         realm.autorefresh = true
     }
-
+    
     func updateLayoutAfterChanges() {
         self.tableView.reloadData()
         self.favoriteNavigationTitle.title = "Favorites(\(self.favoriteGamesAtFavoriteVC.count))"
@@ -97,11 +97,7 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        //        let selectedGameID = favoriteGames[indexPath.row].gameID
-        //        let detailVC = storyboard?.instantiateViewController(identifier: "DetailViewController") as! DetailViewController
-        //        detailVC.gameID = selectedGameID
-        //        detailVC.modalTransitionStyle = .flipHorizontal
-        //        self.navigationController?.pushViewController(detailVC, animated: true)
+
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

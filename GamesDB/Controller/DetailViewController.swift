@@ -38,7 +38,7 @@ final class DetailViewController: UIViewController {
         
         setupButtons()
         fetchGameDetails(gameID: gameDataFromSearchVC.id)
-        isGameFavoritedOrNot()
+        isGameFavorited()
     }
     
     func updateOutlets() {
@@ -64,7 +64,6 @@ final class DetailViewController: UIViewController {
     @IBAction func favoriteButtonTapped(_ sender: UIButton) {
         let selectedFavoriteGame = FavoriteGame(with: gameDataFromSearchVC)
         let nonDuplicatedIDArray = Array(realm.objects(FavoriteGame.self)).map({ $0.gameID })
-        
         if favoriteButton.title == "Favorite" {
             if nonDuplicatedIDArray.contains(selectedFavoriteGame.gameID) {
                 realm.refresh()
@@ -73,17 +72,15 @@ final class DetailViewController: UIViewController {
                 realm.beginWrite()
                 realm.add(selectedFavoriteGame)
                 favoriteGames.append(selectedFavoriteGame)
-                selectedFavoriteGame.isFavoritedGame = true
                 realm.refresh()
                 try! realm.commitWrite()
             }
             favoriteButton.title = "Favorited"
-            
+
         } else {
             realm.beginWrite()
                 if !favoriteGames.isEmpty {
                     realm.delete(favoriteGames.last!)
-                    selectedFavoriteGame.isFavoritedGame = false
                 } else {
                     print("Favorite List is empty!")
                 }
@@ -91,19 +88,17 @@ final class DetailViewController: UIViewController {
             try! realm.commitWrite()
             favoriteButton.title = "Favorite"
         }
-        
         InternalEvent.gameFavorited.send(attachment: nil)
     }
     
-    func isGameFavoritedOrNot() {
+    func isGameFavorited() {
         let selectedFavoriteGame = FavoriteGame(with: gameDataFromSearchVC)
         let nonDuplicatedIDArray = Array(realm.objects(FavoriteGame.self)).map({ $0.gameID })
-        if nonDuplicatedIDArray.contains(selectedFavoriteGame.gameID) || selectedFavoriteGame.isFavoritedGame {
+        if nonDuplicatedIDArray.contains(selectedFavoriteGame.gameID) {
             favoriteButton.title = "Favorited"
         } else {
             favoriteButton.title = "Favorite"
         }
-        InternalEvent.gameFavorited.send(attachment: nil)
     }
         
     @IBAction func visitRedditButtonTapped(_ sender: UIButton) {

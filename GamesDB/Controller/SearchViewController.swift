@@ -18,7 +18,6 @@ final class SearchViewController: UIViewController {
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var noGameReturnView: UIView!
     
-    lazy var defaultGamesData = [Game]()
     lazy var searchingGamesData = [Game]()
     lazy var networkManager = NetworkManager()
     lazy var nextPage: Int = 1
@@ -63,7 +62,7 @@ final class SearchViewController: UIViewController {
 
 //MARK: - Network Request
 extension SearchViewController {
-    
+    // It is default game request
     func gamesAtMainScreen(page: Int) {
         networkManager.fetchDefaultGames(page: page) { [weak self] results in
             guard let self = self else { return }
@@ -71,7 +70,6 @@ extension SearchViewController {
             if results.isEmpty {
                 self.screenState = .empty
             } else {
-                self.defaultGamesData.append(contentsOf: results)
                 self.searchingGamesData.append(contentsOf: results)
                 self.screenState = .loaded
                 DispatchQueue.main.async {
@@ -107,12 +105,7 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         nextPage = 1
-        //        searchingGamesData = []
-        //        gamesAtMainScreen(page: nextPage)
         searchBar.endEditing(true)
-        //        DispatchQueue.main.async {
-        //            self.tableView.reloadData()
-        //        }
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -128,7 +121,7 @@ extension SearchViewController: UISearchBarDelegate {
             searchingGamesData = []
             // searchingGamesData reset as there were games comin from default request
             screenState = .searching
-            // filterview shows
+            // filterview showing
         } else if query.count >= 3 {
             fetchGames(page: nextPage, query: queryForPagination)
         }

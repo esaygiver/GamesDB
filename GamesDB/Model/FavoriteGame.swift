@@ -17,8 +17,6 @@ class FavoriteGame: Object {
     
     var isFavoritedGame: Bool = false
     
-   // var genreInstances: [Genre]?
-    
     convenience init(with game: Game) {
         self.init()
         self.gameTitle = game.name!
